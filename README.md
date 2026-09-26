@@ -97,9 +97,7 @@ what Colab does not ship with in its first cells.
 
 ## Authors
 
-Deborah Osafroadu-Amankwah, Kwabena Owusu-Agyemang, and Chrisvy Kehn Opportun Itoua
-(Department of Computer Science, Kwame Nkrumah University of Science and Technology, Kumasi,
-Ghana).
+Deborah Osafroadu-Amankwah, Kwabena Owusu-Agyemang, and Chrisvy Kehn Opportun Itoua.
 
 ## Licence
 
