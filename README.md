@@ -1,6 +1,6 @@
 # ZSSAM-VGG
 
-**Zero-Shot Segmentation-Guided Masked Neural Style Transfer**
+**Zero-Shot Segmentation Guided Masked Neural Style Transfer**
 
 <p align="center">
   <img src="figs/fig_qualitative.png" alt="ZSSAM-VGG: foreground preserved, background stylised" width="100%">
