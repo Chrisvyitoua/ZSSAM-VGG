@@ -16,9 +16,14 @@ Segment Anything Model 2 (SAM 2) with no training and no prompt; the VGG-19 Gram
 style loss of Gatys et al. is then restricted to the background, and the foreground is
 held fixed throughout optimisation by gradient masking and a pixel-lock projection.
 
+Abbreviations used below: **SAM 2** = Segment Anything Model 2; **VGG-19** = the 19-layer
+VGG convolutional network; **SSIM** = structural similarity index (0 = dissimilar,
+1 = identical); **LPIPS** = learned perceptual image patch similarity; **MS-COCO** =
+Microsoft Common Objects in Context dataset.
+
 ## Method
 
-1. **Automatic mask.** SAM 2 proposes object masks for the content
+1. **Automatic mask.** SAM 2 (Hiera-Large backbone) proposes object masks for the content
    image. The largest mask whose area lies between 15% and 70% of the image is selected as
    the protected foreground.
 2. **Background-only style loss.** The VGG-19 Gram-matrix style loss is applied only to the
@@ -32,14 +37,14 @@ held fixed throughout optimisation by gradient masking and a pixel-lock projecti
 
 Two baselines are included for comparison:
 - **Global Gatys** — the original method; stylises every pixel.
-- **Post-hoc paste** — run global Gatys, then composite the original foreground back on top.
+- **Style-then-mask** — Masked style transfer baseline defined by Seyed et al. (*Improving Masked Style Transfer using Blended Partial Convolution*, arXiv:2508.05769, 2026).
 
 ## Results
 
 Evaluated on **760 content-style pairs** (76 MS-COCO content images x 10 WikiArt styles),
 mean +/- standard deviation. Arrows show whether higher (^) or lower (v) is better.
 
-| Metric | ZSSAM-VGG (ours) | Post-hoc paste | Global Gatys |
+| Metric | ZSSAM-VGG (ours) | Style-then-mask | Global Gatys |
 |---|---|---|---|
 | Protected-region SSIM ^ | **0.982 +/- 0.012** | 0.975 +/- 0.017 | 0.445 +/- 0.168 |
 | Background style fidelity v | **0.060 +/- 0.022** | 0.137 +/- 0.085 | 0.128 +/- 0.079 |
@@ -49,8 +54,8 @@ mean +/- standard deviation. Arrows show whether higher (^) or lower (v) is bett
 
 ZSSAM-VGG preserves the foreground almost perfectly (protected-region SSIM 0.982 versus
 0.445 for global Gatys) and matches the style in the background roughly 2.3x more faithfully
-than the post-hoc paste. All differences on foreground preservation and background style
-fidelity are significant under a paired Wilcoxon signed-rank test (p < 1e-100).
+than the style-then-mask baseline. All differences on foreground preservation and background
+style fidelity are significant under a paired Wilcoxon signed-rank test (p < 1e-100).
 
 Per-pair results are in [`results_colab.csv`](results_colab.csv); a qualitative comparison
 is in [`figs/fig_qualitative.png`](figs/fig_qualitative.png).
@@ -59,6 +64,7 @@ is in [`figs/fig_qualitative.png`](figs/fig_qualitative.png).
 
 ```
 ZSSAM_VGG_Batch.ipynb   Batch runner (Colab): SAM 2 + VGG-19, all three methods, checkpointed
+results_colab.csv       Per-pair metrics for the 760 pairs
 figs/fig_qualitative.png  Qualitative comparison figure
 ```
 
@@ -81,7 +87,7 @@ Key configuration knobs: `N_CONTENT`, `N_STYLES`, `IMG_SIZE`, `EPOCHS`, `STYLE_W
 ## Data
 
 Content images are from MS-COCO 2014 and style images from WikiArt. Neither dataset is
-redistributed here, download them from their sources and point the notebook at your copies.
+redistributed here; download them from their sources and point the notebook at your copies.
 
 ## Dependencies
 
@@ -89,6 +95,13 @@ Python 3, PyTorch, torchvision, the SAM 2 package with the Hiera-Large checkpoin
 `lpips`, `scikit-image`, `pillow`, `numpy`, `pandas`, `matplotlib`. The notebook installs
 what Colab does not ship with in its first cells.
 
+## Authors
+
+Deborah Osafroadu-Amankwah, Kwabena Owusu-Agyemang, and Chrisvy Kehn Opportun Itoua
+(Department of Computer Science, Kwame Nkrumah University of Science and Technology, Kumasi,
+Ghana).
+
 ## Licence
 
 MIT. See [`LICENSE`](LICENSE).
+
