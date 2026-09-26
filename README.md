@@ -2,6 +2,11 @@
 
 **Zero-Shot Segmentation-Guided Masked Neural Style Transfer**
 
+<p align="center">
+  <img src="figs/fig_qualitative.png" alt="ZSSAM-VGG: foreground preserved, background stylised" width="100%">
+</p>
+<p align="center"><em>Content · style · SAM 2 mask · ZSSAM-VGG (ours) · global Gatys · post-hoc paste. Our method keeps the foreground sharp while stylising the background.</em></p>
+
 ZSSAM-VGG applies an artistic style to the **background** of an image while leaving the
 **foreground** object untouched. A foreground mask is obtained automatically from the
 Segment Anything Model 2 (SAM 2) with no training and no prompt; the VGG-19 Gram-matrix
